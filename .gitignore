@@ -1,0 +1,26 @@
+# Node
+node_modules/
+
+# Build output
+dist/
+
+# Environment
+.env
+.env.local
+.env.*.local
+z-requirement
+z-requirement/
+
+# Editor and OS files
+.DS_Store
+.vscode/
+.idea/
+
+# Logs
+npm-debug.log
+yarn-error.log
+
+# Optional lockfile (commit if you want reproducible installs)
+# package-lock.json
+
+/generated/prisma
