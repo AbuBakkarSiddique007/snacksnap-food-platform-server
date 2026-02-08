@@ -21,6 +21,8 @@ app.use(express.json());
 app.use('/api/auth', toNodeHandler(auth));
 
 app.use('/api/admin/categories', categoryRouter);
+app.use('/api/categories', categoryRouter);
+
 
 app.get('/', (req, res) => {
     res.status(200).send('SnackSnap Server is running!');

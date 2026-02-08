@@ -18,6 +18,20 @@ const createCategory = async (payload: { name: string; description?: string }) =
     return category;
 }
 
+
+const getAllCategories = async () => {
+    const categories = await prisma.category.findMany({ orderBy: { createdAt: 'desc' } });
+    return categories;
+};
+
+const getCategoryById = async (id: string) => {
+    if (!id) throw new Error('Category id is required');
+    const category = await prisma.category.findUnique({ where: { id } });
+    return category;
+};
+
 export const categoryService = {
-    createCategory
+    createCategory,
+    getAllCategories,
+    getCategoryById,
 };
