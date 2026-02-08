@@ -5,6 +5,7 @@ import cors from 'cors';
 import { auth } from './lib/auth';
 import { categoryRouter } from './modules/category/category.route';
 
+
 const port = process.env.PORT || 4000;
 
 const app = express();
@@ -20,7 +21,8 @@ app.use(express.json());
 // Better-Auth Middleware :
 app.use('/api/auth', toNodeHandler(auth));
 
-app.use('/api/admin/categories', categoryRouter);
+// Category Routes :
+app.use('/api/provider/categories', categoryRouter);
 app.use('/api/categories', categoryRouter);
 
 
