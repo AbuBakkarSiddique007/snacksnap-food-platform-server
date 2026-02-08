@@ -7,13 +7,18 @@ import nodemailer from "nodemailer";
 const SMTP_USER = process.env.SMTP_USER;
 const SMTP_PASS = process.env.SMTP_PASS;
 const APP_URL = process.env.APP_URL;
+const TRUSTED_ORIGINS = process.env.TRUSTED_ORIGINS
+  ? process.env.TRUSTED_ORIGINS.split(',').map((s) => s.trim()).filter(Boolean)
+  : APP_URL
+  ? [APP_URL]
+  : [];
 
 if (!SMTP_USER || !SMTP_PASS) {
     console.warn('SMTP_USER or SMTP_PASS is not set. Verification emails will fail to send.');
 }
 
-if (!APP_URL) {
-    console.warn('APP_URL is not set. Constructed verification links may be invalid.');
+if (!APP_URL && TRUSTED_ORIGINS.length === 0) {
+    console.warn('APP_URL and TRUSTED_ORIGINS are not set. Constructed verification links and trusted origins may be invalid.');
 }
 
 const transporter = nodemailer.createTransport({
@@ -31,7 +36,7 @@ export const auth = betterAuth({
         provider: "postgresql",
     }),
 
-    trustedOrigins: APP_URL ? [APP_URL] : [],
+    trustedOrigins: TRUSTED_ORIGINS,
 
     user: {
         additionalFields: {
